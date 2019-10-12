@@ -155,10 +155,7 @@ ul {
 .padding-top-bottom {
   padding: 40px 0;
 }
-.work-success-area.padding-top-bottom {
-    background:  url(img/back.jpg) center center no-repeat;
-    background-size: cover;
-}
+
 .padding-top-bottom30 {
   padding: 120px 0 90px;
 }
@@ -1141,6 +1138,7 @@ p.sub-title {
 }
 .slider-overlay .nivo-caption {
   opacity: 1;
+  background: #00000087;
 }
 .slider-default .nivo-directionNav .nivo-prevNav {
   background: #ffffff;
@@ -1959,15 +1957,11 @@ p.sub-title {
   color: #ffffff;
   font-size: 16px;
 }
+.modal{
+	z-index:99999;
+}
 /**====================== 04. About Page ========================**/
-.work-success-area .success-content h2 {
-  font-size: 36px;
-  color:white;
-}
-.work-success-area .success-content p {
-  line-height: 30px;
-  color: white;
-}
+
 .work-success-area .success-image {
   text-align: center;
 }
