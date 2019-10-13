@@ -136,40 +136,44 @@
                             <form class="contact-form" id='contact-form33' method="post">
                                 <fieldset>
                                     <!-- Form Name -->
-                                    <legend>Send Us A Message</legend>
+                                    <div class="alert alert-success contact__msg" style="display: none" role="alert">
+
+                Your message was sent successfully.
+
+              </div>
                                     <div class="row">
                                         <div class="col-lg-6 col-md-6 col-sm-6">
                                             <!-- Text input-->
                                             <div class="form-group">
-                                                <input id="form-name" name="name" placeholder="Name*" class="form-control" type="text" data-error="Name field is required" required>
+                                                <input id="form-name" name="fname" placeholder="Name*" class="form-control" type="text" data-error="Name field is required">
                                                 <div class="help-block with-errors"></div>
                                             </div>
                                         </div>
                                         <div class="col-lg-6 col-md-6 col-sm-6">
                                             <!-- Text input-->
                                             <div class="form-group">
-                                                <input id="form-email" name="email" placeholder="E-mail*" class="form-control" type="text" data-error="E-mail field is required" required>
+                                                <input id="form-email" name="email" placeholder="E-mail*" class="form-control" type="text" data-error="E-mail field is required">
                                                 <div class="help-block with-errors"></div>
                                             </div>
                                         </div>
                                         <div class="col-lg-6 col-md-6 col-sm-6">
                                             <!-- Text input-->
                                             <div class="form-group">
-                                                <input id="form-subject" name="subject" placeholder="Subject*" class="form-control" type="text" data-error="Subject field is required" required>
+                                                <input id="form-subject" name="subject" placeholder="Subject*" class="form-control" type="text" data-error="Subject field is required">
                                                 <div class="help-block with-errors"></div>
                                             </div>
                                         </div>
                                         <div class="col-lg-6 col-md-6 col-sm-6">
                                             <!-- Text input-->
                                             <div class="form-group">
-                                                <input id="form-phone" name="phone" placeholder="Phone*" class="form-control" type="text" data-error="Phone field is required" required>
+                                                <input id="form-phone" name="phoneno" placeholder="Phone*" class="form-control" type="text" data-error="Phone field is required">
                                                 <div class="help-block with-errors"></div>
                                             </div>
                                         </div>
                                         <div class="col-lg-12 col-md-12 col-sm-12">
                                             <!-- Textarea -->
                                             <div class="form-group">
-                                                <textarea class="textarea form-control" rows="4" id="form-message" name="message" placeholder="Message*" data-error="Message field is required" required></textarea>
+                                                <textarea class="textarea form-control" rows="4" id="form-message" name="comment_message" placeholder="Message*" data-error="Message field is required"></textarea>
                                                 <div class="help-block with-errors"></div>
                                             </div>
                                         </div>
@@ -331,3 +335,238 @@ owned UAE company that was incorporated in Khalifa Industrial Zone, Abu Dhabi(KI
 </body>
 
 </html>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+<script>
+
+    $('document').ready(function(){
+
+      var form = $('.custom_frm');
+
+      $("form").validate({
+
+        rules: {
+
+          fname: {
+
+            required: true,
+
+            lettersonly: true,
+
+            minlength: 2
+
+          },          
+
+          phoneno: {
+
+            required: true,
+
+            number: true,
+
+            minlength: 10
+
+          },          
+
+        
+
+          address: {
+
+            required: true
+
+           
+
+          },
+
+           comment_message: {
+
+            required: true
+
+           
+
+          },
+
+          subject: {
+
+            required: true
+
+           
+
+          },
+          email: {
+
+            required: true,
+            email: true
+
+           
+
+          }
+          
+          
+
+        },
+
+        messages: {
+
+          fname: {
+
+            required: "Please enter a valid name",
+
+            minlength: "Your Name must consist of at least 2 characters"
+
+          },
+
+          phoneno: {
+
+            required: "Please enter a valid Phone",
+
+            minlength: "Your Phone Number consist of at least 10 digit.",
+
+            number: "Your phone must be number ."
+
+          },
+          
+          
+                  
+
+           comment_message: {
+
+            required: "Please enter a valid Description of work",
+
+          },
+
+          address: {
+
+            required: "Please enter a valid Site Address",
+
+          },
+
+          address: {
+
+            required: "Please enter a valid Subject",
+
+          },
+
+          email: {
+
+            required: "Please enter a valid Email",
+
+          },
+
+        },
+
+        highlight: function(element) {
+
+          $('.contact__msg').fadeIn().removeClass('alert-success').addClass('alert-danger');
+
+          $(".contact__msg").text('Fill up the following required fields');
+
+          $(".contact__msg").show();
+
+          $(element).parent().addClass("field-error");
+
+        },
+
+        unhighlight: function(element) {          
+
+          $(".contact__msg").hide();
+
+          $(element).parent().removeClass("field-error");
+
+        },
+
+        success: function(label) {
+
+          //alert('succes:' + label);
+
+        },
+
+        submitHandler: function(form) {
+
+           $.ajax({
+
+            url: 'mail_custom.php',
+
+            type: 'POST',
+
+            data: $(form).serialize(),
+
+            success: function(response) {
+
+              done_func(response)
+
+            }
+
+          });
+
+          return false;
+
+        },
+
+        invalidHandler: function(form, validator) {
+
+          //alert('invalidHandler');
+
+        }
+
+      });
+
+      jQuery.validator.addMethod("lettersonly", function(value, element) {
+
+        return this.optional(element) || /^[a-z\s]+$/i.test(value);
+
+      }, "Input value must be Alphabetic");   
+
+      jQuery.validator.classRuleSettings.lettersonly = { lettersonly: true }; 
+
+    });
+
+
+
+    // Success function
+
+    function done_func(response) {
+
+      $('.contact__msg').fadeIn().removeClass('alert-danger').addClass('alert-success');
+
+         $(".contact__msg").text('Your message was sent successfully');
+         $('.custom_frm').trigger("reset");
+
+      form.fadeOut();
+
+      $('.contact__msg').text(response);
+
+      setTimeout(function () {
+
+        $('.contact__msg').fadeOut();
+
+        form.fadeIn();
+
+      }, 3000);
+
+      form.find('input:not([type="submit"]), textarea').val('');
+
+    }
+
+    
+
+    // fail function
+
+    function fail_func(data) {
+
+       $('.contact__msg').fadeIn().removeClass('alert-success').addClass('alert-success');
+
+       $('.contact__msg').text(data.responseText);
+
+      setTimeout(function () {
+
+         $('.contact__msg').fadeOut();
+
+        form.fadeIn();
+
+      }, 3000);
+
+    }
+
+  
+
+  </script>

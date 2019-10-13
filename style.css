@@ -3126,6 +3126,7 @@ p.sub-title {
   display: inline-block;
   border-radius: 50%;
   width: 50%;
+  height:200px;
 }
 .excellent-team .single-team-item .team-content h3 {
   font-size: 20px;
